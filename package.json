@@ -1,0 +1,6 @@
+{
+  "name": "aether-motion", "version": "1.0.0", "private": true, "type": "module",
+  "description": "A dependency-free motion design editor with a WebGPU compositor.",
+  "scripts": { "start": "node server.mjs", "test": "node --test tests/*.test.mjs", "build": "node build.mjs" },
+  "engines": { "node": ">=20" }, "license": "MIT"
+}
