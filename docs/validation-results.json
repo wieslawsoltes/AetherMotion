@@ -1,0 +1,66 @@
+{
+  "passed": 37,
+  "checks": [
+    "WebGPU initialization and WGSL validation",
+    "Demo composition has eleven real layers",
+    "Text editing updates the document",
+    "Undo restores editable text",
+    "Animated inspector value inserts a keyframe",
+    "Pointer drawing creates sized vector layer",
+    "Canvas manipulation changes model coordinates",
+    "Two-keyframe opacity animation",
+    "Timeline keyframe drag changes key time",
+    "Value graph editor is functional",
+    "Easing selector changes selected keyframe",
+    "Visibility switch removes layer from evaluated scene",
+    "Solo isolates selected layer",
+    "Image media import",
+    "Project file includes media and editable tracks",
+    "Project roundtrip loads embedded media",
+    "IndexedDB autosave survives reload",
+    "PNG export dimensions and pixels",
+    "WebM decodes to exact frame count and resolution",
+    "WebM duration matches the composition",
+    "WebM contains real composition pixels, not a blank canvas",
+    "Video import and decoder",
+    "Video timeline seeking",
+    "GPU premultiplied-alpha readback unpremultiplies correctly",
+    "GPU blend reference: normal",
+    "GPU blend reference: multiply",
+    "GPU blend reference: screen",
+    "GPU blend reference: add",
+    "GPU blend reference: overlay",
+    "GPU blend reference: difference",
+    "GPU exposure effect doubles encoded channel values",
+    "Ellipse mask clips source alpha",
+    "GPU blur spreads beyond source bounds",
+    "GPU glow spreads beyond source bounds",
+    "No JavaScript or GPU validation errors",
+    "Portable single-file build starts",
+    "Canvas fallback playback advances the timeline"
+  ],
+  "errors": [],
+  "gpu_errors": [],
+  "video": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "vp9",
+        "width": 320,
+        "height": 180,
+        "nb_read_frames": "12"
+      }
+    ],
+    "format": {
+      "duration": "1.200000"
+    }
+  },
+  "environment": {
+    "browser": "144.0.7559.96",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+    "software_gpu": true,
+    "headless": false
+  },
+  "recorded_at": "2026-09-06T13:04:39.928616+00:00"
+}
