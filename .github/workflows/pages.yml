@@ -1,0 +1,89 @@
+name: Test and publish Aether Motion
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aether-pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          for file in src/*.js *.mjs; do
+            node --check "$file"
+          done
+      - name: Run core regression tests
+        run: npm test
+      - name: Build modular and standalone applications
+        run: npm run build
+      - name: Stage the Pages site
+        run: |
+          cp AetherMotion.html dist/AetherMotion.html
+          cp -R examples dist/examples
+          touch dist/.nojekyll
+          printf '{"commit":"%s","repository":"%s"}\n' "$GITHUB_SHA" "$GITHUB_REPOSITORY" > dist/deployment.json
+      - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Publish and verify
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the exact deployed source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Reproduce the expected artifact for verification
+        run: |
+          npm run build
+          cp AetherMotion.html dist/AetherMotion.html
+          cp -R examples dist/examples
+          touch dist/.nojekyll
+          printf '{"commit":"%s","repository":"%s"}\n' "$GITHUB_SHA" "$GITHUB_REPOSITORY" > dist/deployment.json
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify live file hashes and MIME types
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node verify-deployment.mjs "$SITE_URL"
