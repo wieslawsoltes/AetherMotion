@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: interpolation clamps endpoints and linearly interpolates
+ok 1 - interpolation clamps endpoints and linearly interpolates
+  ---
+  duration_ms: 1.025882
+  type: 'test'
+  ...
+# Subtest: hold transitions exactly at the next keyframe
+ok 2 - hold transitions exactly at the next keyframe
+  ---
+  duration_ms: 0.111806
+  type: 'test'
+  ...
+# Subtest: smoothstep and cubic-bezier interpolation
+ok 3 - smoothstep and cubic-bezier interpolation
+  ---
+  duration_ms: 0.289149
+  type: 'test'
+  ...
+# Subtest: keyframes quantize and update without duplicate frame times
+ok 4 - keyframes quantize and update without duplicate frame times
+  ---
+  duration_ms: 1.640214
+  type: 'test'
+  ...
+# Subtest: affine inverse roundtrip
+ok 5 - affine inverse roundtrip
+  ---
+  duration_ms: 0.290972
+  type: 'test'
+  ...
+# Subtest: parent transforms compose and cycles are rejected
+ok 6 - parent transforms compose and cycles are rejected
+  ---
+  duration_ms: 0.65316
+  type: 'test'
+  ...
+# Subtest: layer order, solo, visibility and exclusive out-points
+ok 7 - layer order, solo, visibility and exclusive out-points
+  ---
+  duration_ms: 1.333679
+  type: 'test'
+  ...
+# Subtest: transaction history coalesces all drag writes and supports redo
+ok 8 - transaction history coalesces all drag writes and supports redo
+  ---
+  duration_ms: 0.443178
+  type: 'test'
+  ...
+# Subtest: history respects count and memory bounds
+ok 9 - history respects count and memory bounds
+  ---
+  duration_ms: 0.414345
+  type: 'test'
+  ...
+# Subtest: project roundtrip preserves demo, animation and schema
+ok 10 - project roundtrip preserves demo, animation and schema
+  ---
+  duration_ms: 1.717589
+  type: 'test'
+  ...
+# Subtest: untrusted project validation rejects cycles and clamps allocations
+ok 11 - untrusted project validation rejects cycles and clamps allocations
+  ---
+  duration_ms: 0.315428
+  type: 'test'
+  ...
+# Subtest: timecode uses integer frames
+ok 12 - timecode uses integer frames
+  ---
+  duration_ms: 0.127068
+  type: 'test'
+  ...
+# Subtest: WebM muxer writes EBML, track codec, clusters and cues
+ok 13 - WebM muxer writes EBML, track codec, clusters and cues
+  ---
+  duration_ms: 1.142405
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 63.077735
