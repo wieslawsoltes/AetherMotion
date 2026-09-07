@@ -1,0 +1,6 @@
+node_modules/
+test-results/
+__pycache__/
+.DS_Store
+dist/
+AetherMotion.html
