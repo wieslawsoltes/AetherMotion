@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18191d"><meta name="description" content="Aether Motion — a local-first motion design studio. Animate, composite, and render with WebGPU.">
+<title>Aether Motion — Motion, without limits.</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232e2343'/%3E%3Cpath d='M15 46 29 17h7l14 29H39l-7-17-7 17Z' fill='%23c4a6fa'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <a class="brand" href="#" data-action="about" aria-label="About Aether Motion"><span class="brandmark">A<span>m</span></span><span>Aether <b>Motion</b></span></a>
+    <nav class="menubar" aria-label="Main menu" id="menubar"></nav>
+    <div class="document-name"><span class="document-dot"></span><span id="document-name">Orbit — Brand Film</span><span class="extension">.aether</span></div>
+    <button class="header-icon" data-action="palette" title="Command palette (Ctrl/⌘ K)" data-icon="search"></button>
+    <span class="avatar" title="Local workspace · your files stay on this device">WS</span>
+  </header>
+  <div class="toolbar">
+    <div class="tools" id="tools"></div>
+    <span class="toolbar-divider"></span><button class="toolbar-button" data-action="undo" title="Undo (Ctrl/⌘ Z)" data-icon="undo"></button><button class="toolbar-button" data-action="redo" title="Redo (Ctrl/⌘ Shift Z)" data-icon="redo"></button>
+    <span class="toolbar-divider"></span><button class="tool-option" id="snap-button" data-action="snap"><span data-icon="magnet"></span>Snapping</button>
+    <div class="workspace-tabs"><button class="active" data-workspace="default">Default</button><button data-workspace="animation">Animation</button><button data-workspace="effects">Effects</button><button data-workspace="minimal">Review</button></div>
+    <button class="help-button" data-action="shortcuts" title="Keyboard shortcuts" data-icon="help"></button>
+    <button class="export-button" data-action="export"><span data-icon="export"></span>Export<span class="export-chevron">⌄</span></button>
+  </div>
+  <main class="workspace">
+    <aside class="panel project-panel">
+      <div class="panel-tabs"><button class="active" data-left-tab="project">Project</button><button data-left-tab="effects">Effect Controls</button><span class="spacer"></span><span class="panel-menu" data-icon="more"></span></div>
+      <div id="project-content"></div><div id="effect-content" hidden></div>
+      <div class="project-bottom"><button data-action="import" title="Import media" data-icon="import"></button><button data-action="add-solid" title="New solid" data-icon="folder-plus"></button><span class="spacer"></span><span id="asset-count">1 composition</span></div>
+    </aside>
+    <section class="panel composition-panel">
+      <div class="panel-tabs"><button class="active comp-tab"><span data-icon="composition"></span>Composition<span id="comp-tab-name">Orbit — Brand Film</span></button><span class="spacer"></span><button class="panel-menu" data-action="composition" title="Composition settings" data-icon="settings"></button></div>
+      <div class="viewer-heading"><button class="crumb" data-action="composition" id="comp-crumb">Orbit — Brand Film</button><span class="crumb-separator">›</span><span class="viewer-subtitle">Active composition</span><span class="spacer"></span><span class="engine-badge" id="engine-badge"><i></i>Initializing renderer</span></div>
+      <div id="viewport" class="viewport" tabindex="0" aria-label="Composition viewer. Drag layers to move them.">
+        <div id="stage-box"><canvas id="scene" width="1920" height="1080"></canvas><svg id="overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"></svg></div>
+        <div id="loading" class="loading"><span class="brandmark">A<span>m</span></span><p>Preparing your canvas<span class="loading-dots">…</span></p></div>
+        <div id="drop-hint" class="drop-hint"><span data-icon="import"></span>Drop media into your composition</div>
+        <div class="viewport-note" id="viewport-note"></div>
+      </div>
+      <div class="viewer-controls"><select id="zoom-select" title="Viewer zoom"><option value="fit">Fit</option><option value=".25">25%</option><option value=".5">50%</option><option value=".75">75%</option><option value="1">100%</option><option value="1.5">150%</option><option value="2">200%</option></select><span class="small-separator"></span><select id="quality-select" title="Preview resolution"><option value="1">Full</option><option value=".5" selected>Half</option><option value=".25">Quarter</option></select><button data-action="transparency" title="Toggle transparency grid" data-icon="checker"></button><button data-action="guides" title="Title/action safe guides" data-icon="safe"></button><button data-action="grid" title="Composition grid" data-icon="grid"></button><span class="spacer"></span><button data-action="snapshot" title="Save frame as PNG" data-icon="camera"></button><span class="viewer-time" id="viewer-time">0:00:02:12</span><span class="small-separator"></span><span id="comp-dimensions">1920 × 1080</span><button data-action="fullscreen" title="Maximize composition viewer" data-icon="maximize"></button></div>
+    </section>
+    <aside class="panel inspector-panel">
+      <div class="panel-tabs"><button class="active" data-right-tab="properties">Properties</button><button data-right-tab="presets">Effects & Presets</button><span class="spacer"></span><span class="panel-menu" data-icon="more"></span></div>
+      <div id="inspector-content" class="inspector-content"></div><div id="presets-content" hidden></div>
+      <div class="preview-panel"><div class="section-caption">PREVIEW<span class="spacer"></span><span id="preview-fps">30 fps</span></div><div class="transport"><button data-action="home" title="First frame (Home)" data-icon="first"></button><button data-action="prev" title="Previous frame (Page Up)" data-icon="prev"></button><button class="play-button" data-action="play" title="Play / pause (Space)" data-icon="play"></button><button data-action="next" title="Next frame (Page Down)" data-icon="next"></button><button data-action="end" title="Last frame (End)" data-icon="last"></button><button id="loop-button" class="active" data-action="loop" title="Loop work area" data-icon="loop"></button></div><div class="preview-caption">Shortcut<span>Spacebar</span><span class="spacer"></span><span class="muted">Video preview · silent</span></div></div>
+    </aside>
+    <div class="panel-resizer left-resizer" data-resize="left"></div><div class="panel-resizer right-resizer" data-resize="right"></div>
+  </main>
+  <section class="timeline panel">
+    <div class="timeline-resizer" data-resize="timeline"></div>
+    <div class="panel-tabs timeline-tabs"><button class="active" data-action="show-timeline"><span data-icon="composition"></span><span id="timeline-tab-name">Orbit — Brand Film</span></button><button data-action="export"><span data-icon="queue"></span>Render Queue</button><span class="spacer"></span><button class="mini-text" data-action="add-marker"><span data-icon="marker"></span>Add marker</button><button class="panel-menu" data-action="composition" data-icon="settings" title="Composition settings"></button></div>
+    <div class="timeline-toolbar"><div class="time-display"><button id="current-time" data-action="goto" title="Go to time">0:00:02:12</button><span id="current-frame">00072 <span>(30.00 fps)</span></span></div><label class="timeline-search"><span data-icon="search"></span><input id="layer-search" placeholder="Find a layer…" aria-label="Find a layer"></label><button data-action="add-layer" title="Add a layer" data-icon="plus"></button><span class="toolbar-divider"></span><button id="autokey-button" data-action="autokey" title="Auto-keyframe" data-icon="keyframe"></button><button data-action="keyframe" title="Add keyframe to the selected property (K)" data-icon="diamond-plus"></button><button data-action="ease" title="Easy ease (F9)" class="ease-button">ƒ</button><button id="graph-button" data-action="graph" title="Graph editor (Shift F3)" data-icon="graph"></button><span class="spacer"></span><span class="muted timeline-small-label">Timeline</span><button data-action="timeline-out" title="Zoom out timeline" data-icon="minus"></button><input type="range" id="timeline-zoom" min="1" max="5" step=".1" value="1" aria-label="Timeline zoom"><button data-action="timeline-in" title="Zoom in timeline" data-icon="plus"></button></div>
+    <div class="timeline-ruler-row"><div class="layer-columns"><span data-icon="eye"></span><span data-icon="solo"></span><span data-icon="lock"></span><span class="column-number">#</span><span>Source Name</span><span class="spacer"></span><span>Mode</span></div><div id="ruler-viewport"><div id="ruler"></div></div></div>
+    <div class="timeline-content"><div id="timeline-scroll"><div id="timeline-rows"></div></div><div id="graph-wrap" hidden><canvas id="graph-canvas"></canvas><div class="graph-caption"><span id="graph-label">Position Y · value graph</span><select id="graph-easing" title="Selected keyframe easing"><option value="ease">Easy ease</option><option value="linear">Linear</option><option value="ease-in">Ease in</option><option value="ease-out">Ease out</option><option value="hold">Hold</option></select></div></div></div>
+    <div class="timeline-footer"><button class="small-button" data-action="expand-animated">Show animated properties <span>U</span></button><span class="spacer"></span><span id="layer-count">11 layers</span><span class="small-separator"></span><span id="timeline-duration">12.00 seconds</span><span class="timeline-footer-brand">AETHER ENGINE</span></div>
+  </section>
+  <footer class="statusbar"><span class="status-dot"></span><span id="save-status">Local project</span><span class="status-separator">/</span><span id="status-message">All the space your ideas need.</span><span class="spacer"></span><span id="render-stats"></span><span class="small-separator"></span><span id="renderer-status">Initializing</span><span class="version">v1.0</span></footer>
+</div>
+<div id="menu-popover" class="menu-popover" hidden></div><div id="toast" role="status" aria-live="polite"></div>
+<dialog id="modal"><form id="modal-form" method="dialog"><div id="modal-content"></div></form></dialog>
+<input id="media-input" type="file" accept="image/*,video/*" multiple hidden><input id="project-input" type="file" accept=".aether,.json,application/json" hidden>
+<script type="module" src="./src/app.js"></script>
+</body></html>
